@@ -1,0 +1,82 @@
+﻿@model etournament.Models.tbl_admin
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "Login";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Etournament</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+
+        .card {
+            background-color: white;
+            border-radius: 2%;
+            box-shadow: rgba(0, 0, 0, 0.12) 1px 3px 3px 3px;
+            /*ox-shadow: 5px 5px 6px -5px;*/
+        }
+    </style>
+
+    <script>
+
+    </script>
+</head>
+
+
+
+
+@using (@Html.BeginForm())
+{
+    <body>
+
+        <div class="container-fluid " style=" padding-top:11%; padding-bottom:11%;margin:auto; position:relative ">
+            <div id="this" class="container-fluid card " style="width:20%">
+
+
+                <div class="container-fluid form-horizontal " style="width:100%;  padding-left:10%">
+                    <h2 class="text-center form-group h2">Login</h2>
+                    <div class="row form-group ">
+                        <span style="color:red">@Html.ValidationMessageFor(x => x.ad_username)</span>
+
+                        @Html.TextBoxFor(x => x.ad_username, new { @class = "form-control", @placeholder = "email-id", @type = "", @required = "required" })
+                    </div>
+                    <div class="row form-group ">
+                        <span style="color:red" class="error">@Html.ValidationMessageFor(x => x.ad_password)</span>
+
+
+                        @Html.PasswordFor(x => x.ad_password, new { @class = "form-control", @placeholder = "password", @type = "password", @required = "required" })
+
+                    </div>
+
+                    <div class="row ">
+                        @*<asp:button  class="form-control btn-success" id="adminname" runar="server" OnClick="button1_click" placeholder="username" required="required"></asp:button>*@
+                        <input type="submit" value="Login" class="btn btn-block btn-success form-control" />
+                        @*@Html.ActionResult("Login","UserLogin","User", new { @class = "btn btn-block btn-success form-control", @type = "submit" })*@
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            @Html.ActionLink("Register now?", "SignUp", "User", new { @class = "alert-link text-center form-group" })
+                        </div>
+
+                    </div>
+                    <div>
+                        <p style="color:red">@ViewBag.error</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+}
+
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqureyval")
+}

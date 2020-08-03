@@ -1,0 +1,73 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<etournament.Models.tbl_tournament>
+
+
+@{
+    ViewBag.Title = "All Tournaments";
+}
+
+<head>
+    <style>
+        .card {
+            background-color: #DEF2F1;
+        }
+
+        .thumbnail {
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 8px -6px;
+        }
+        .table-hover{
+            background-color: white;
+        }
+    </style>
+</head>
+<div class="container-fluid ">
+    <span class="pghead"><h1 class="text-center h1  ">All Tournaments</h1></span>
+    <div class="container-fluid ptext">
+        @{ int x = 0;}
+        <table class="table table-striped table-hover card" style="">
+
+            @*<tr class="row panel-heading h3" style="background-color:dimgrey; color:whitesmoke ;">
+                 c
+                    <th class="col-lg-1" style="">Id</th>
+                    <th class="col-lg-4">Tournament Name</th>
+                    <th class="col-lg-2">Date</th>
+                    <th class="col-lg-1"></th>
+
+            </tr>*@
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    x++;
+                    <tr class="row ">
+
+                        <td class="col-lg-6 h3">
+                            <b>@item.t_name</b>
+                            <div class="h4">
+                                <small>Id: @item.t_id</small>
+                            </div>
+                        </td>
+                        <td class="col-lg-4 h4">
+                            <div style="margin-top:2%">
+                                <small>@item.t_dts.ToLongDateString() - @item.t_dte.ToLongDateString()</small>
+                            </div>
+                            <div class="">
+                                <small>@item.t_location</small>
+                            </div>
+                        </td>
+                        <td class="col-lg-1 h4">
+                            <div style="margin-top:2%">
+                                @Html.ActionLink("view", "Viewcontest", new { id = item.t_id })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+        <h4><small>@x  Results found</small></h4>
+    </div>
+</div>
+<div id="container" style="margin-left:50%; margin-top:2%">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount @Html.PagedListPager(Model, page => Url.Action("Contests", new { page }))
+</div>

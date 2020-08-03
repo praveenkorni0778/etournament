@@ -1,0 +1,47 @@
+﻿@model etournament.Models.tbl_category
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<body>
+    @using (Html.BeginForm("Create", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="container form-group  ">
+
+            <h2 class="text-center" >Add New Category</h2>
+            <div class="form-group container jumbotron" style="width:50%">
+
+                <div class="row form-group ">
+                    <span style="color:red">@Html.ValidationMessageFor(x => x.c_name)</span>
+                    <p><label for="Name">Category name </label> </p>
+                    @Html.TextBoxFor(x => x.c_name, new { @class = "form-control", @placeholder = "Category Name" })
+                </div>
+                <div class="row form-group">
+                    <p><label for="imgfile">Image </label> </p>
+                    <input type="file" name="imgfile" id="imgfile" class="form-control" required="required">
+                </div>
+                <div class="row form-group">
+                    @*<asp:button  class="form-control btn-success" id="adminname" runar="server" OnClick="button1_click" placeholder="username" required="required"></asp:button>*@
+                    <input type="submit" value="Update" class="btn btn-block btn-success" />
+                   @* @Html.EditorFor(model => model.Image_Url, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                </div>
+                <div>
+                    <p style="color:red">@ViewBag.error</p>
+                </div>
+                
+            </div>
+        </div>
+    }
+    </body>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqureyval")
+}
+

@@ -1,0 +1,107 @@
+﻿@model etournament.Models.tbl_user
+
+@{
+    ViewBag.Title = "Sign Up";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Etournament</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        /*body{
+            background-color:cornflowerblue;
+        }*/
+    </style>
+</head>
+<body class="container">
+
+    @using (@Html.BeginForm("SignUp", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="container center-block form-group"  style="margin:auto; width:50%">
+            <h2 class="text-center thumbnail">@ViewBag.Title</h2>
+            <div class="jumbotron container-fluid ">
+
+                <div class="row form-group  ">
+                    <label for="name">Name </label>
+                    <span style="color:red">@Html.ValidationMessageFor(x => x.u_name)</span>
+                    @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                    @Html.TextBoxFor(x => x.u_name, new { @class = "form-control gyphicon glyphicon-user", @placeholder = "Full Name", @required = "required" })
+                </div>
+
+                <div class="row form-group">
+                    <label for="imgfile">Image (Only .jpg, .jpeg and .png are allowed) </label>
+                    <input type="file" name="imgfile" id="imgfile" class="form-control" required="required">
+                </div>
+
+                <div class="row form-group">
+                    <label for="email">Email-id </label>
+                    <span style="color:red">@Html.ValidationMessageFor(x => x.u_email)</span>
+                    @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                    @Html.TextBoxFor(x => x.u_email, new { @type = "email", @class = "form-control", @placeholder = "Email ID", @required = "required" })
+                </div>
+
+                <div class="row form-group">
+                    <label for="password">Password </label>
+                    <span style="color:red" class="error">@Html.ValidationMessageFor(x => x.u_password)</span>
+                    @*<asp:TextBox TextBox id="adminpassword" type="password" runat="server" class="form-control" placeholder="username" required="required">*@
+                    @*</asp:TextBox>*@
+                    @Html.PasswordFor(x => x.u_password, new { @type = "password", @class = "form-control password", @placeholder = "Password", @required = "required" })
+                </div>
+
+                <div class="row form-group">
+                    <label for="dob">Date of Birth </label>
+                    <span style="color:red">@Html.ValidationMessageFor(x => x.u_dob)</span>
+                    @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                    @Html.TextBoxFor(x => x.u_dob, new { @type = "date", @class = "form-control", @placeholder = "Date of Birth", @required = "required" })
+                </div>
+
+                <div class="row form-group">
+                    <label for="name">Age </label>
+                    <span style="color:red">@Html.ValidationMessageFor(x => x.u_age)</span>
+                    @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                    @Html.TextBoxFor(x => x.u_age, new { @class = "form-control", @placeholder = "Age" })
+                </div>
+
+                <div class="row  form-group">
+                    <label for="contact">Contact </label>
+                    <span style="color:red">@Html.ValidationMessageFor(x => x.u_contact)</span>
+                    @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                    @Html.TextBoxFor(x => x.u_contact, new { @class = "form-control", @placeholder = "Phone Number", @required = "required" })
+                </div>
+
+                <div class="row form-group">
+                    <label for="gender">Gender (M/ F/ Other) </label>
+                    <span style="color:red">@Html.ValidationMessageFor(x => x.u_gender)</span>
+                    @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                    @Html.TextBoxFor(x => x.u_gender, new { @class = "form-control", @placeholder = "Gender" })
+                </div>
+
+                <div class="row form-group">
+                    <label for="about">About </label>
+                    <span style="color:red">@Html.ValidationMessageFor(x => x.u_desc)</span>
+                    @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                    @Html.TextAreaFor(x => x.u_desc, new {@maxlength="100", @class = "form-control", @placeholder = "A short description about yourself", @required = "required" })
+                </div>
+
+                <div class="row form-group">
+                    @*<asp:button  class="form-control btn-success" id="adminname" runar="server" OnClick="button1_click" placeholder="username" required="required"></asp:button>*@
+                    <input type="submit" value="Login" class="btn btn-block btn-success" />
+                </div>
+                <div>
+                    <p style="color:red">@ViewBag.error</p>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqureyval")
+}

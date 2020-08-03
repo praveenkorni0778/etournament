@@ -1,0 +1,118 @@
+﻿@model etournament.Models.tbl_tournament
+
+@{
+    ViewBag.Title = "Post Tournament";
+
+}
+<head>
+    <style>
+        .thumbnail {
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 8px -6px;
+        }
+    </style>
+</head>
+
+
+@using (Html.BeginForm("CreatePost", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container center-block form-group" style="margin:auto; width:50%">
+        <h1 class="text-center pghead">@ViewBag.Title</h1>
+        <div class=" container-fluid ptext">
+
+            <div class="row form-group   ">
+                <label for="name">Name </label>
+                <span style="color:red">@Html.ValidationMessageFor(x => x.t_name)</span>
+                @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                @Html.TextBoxFor(x => x.t_name, new { @class = "form-control gyphicon glyphicon-user", @placeholder = "Tournament Name", @required = "required" })
+            </div>
+
+            <div class="row form-group">
+                <label for="imgfile">Image/ Brochure (Only .jpg, .jpeg and .png are allowed) </label>
+                <input type="file" name="imgfile" id="imgfile" class="form-control" required="required">
+            </div>
+
+            <div class="row form-group">
+                <label for="description">Description</label>
+                <span style="color:red">@Html.ValidationMessageFor(x => x.t_desc)</span>
+                @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                @Html.TextAreaFor(x => x.t_desc, new { @class = "form-control", @placeholder = "Let participants know more about your tournament", @required = "required" })
+            </div>
+
+            <div class="row form-group">
+                <label for="location">Location </label>
+                <span style="color:red" class="error">@Html.ValidationMessageFor(x => x.t_location)</span>
+                @*<asp:TextBox TextBox id="adminpassword" type="password" runat="server" class="form-control" placeholder="username" required="required">*@
+                @*</asp:TextBox>*@
+                @Html.TextBoxFor(x => x.t_location, new { @class = "form-control", @placeholder = "Location" })
+            </div>
+
+            <div class="row form-group">
+                <label for="address">Address</label>
+                <span style="color:red">@Html.ValidationMessageFor(x => x.t_add)</span>
+                @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                @Html.TextAreaFor(x => x.t_add, new { @class = "form-control", @placeholder = "Address", @required = "required" })
+            </div>
+
+            <div class="row form-group">
+                <label for="website">Website </label>
+                <span style="color:red" class="error">@Html.ValidationMessageFor(x => x.t_website)</span>
+                @*<asp:TextBox TextBox id="adminpassword" type="password" runat="server" class="form-control" placeholder="username" required="required">*@
+                @*</asp:TextBox>*@
+                @Html.TextBoxFor(x => x.t_website, new { @class = "form-control", @placeholder = "www.url.com" })
+            </div>
+
+            <div class="row form-group">
+                <label for="dob">Start Date</label>
+                <span style="color:red">@Html.ValidationMessageFor(x => x.t_dts)</span>
+                @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                @Html.TextBoxFor(x => x.t_dts, new { @type = "date", @class = "form-control" })
+            </div>
+
+            <div class="row  form-group">
+                <label for="dob">End Date</label>
+                <span style="color:red">@Html.ValidationMessageFor(x => x.t_dte)</span>
+                @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                @Html.TextBoxFor(x => x.t_dte, new { @type = "date", @class = "form-control" })
+            </div>
+
+            <div class="row  form-group">
+                <label for="entryfee">Entry Fee (₹) </label>
+                <span style="color:red">@Html.ValidationMessageFor(x => x.t_entryfee)</span>
+                @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                @Html.TextBoxFor(x => x.t_entryfee, new { @class = "form-control", @placeholder = "Entry fee", @required = "required" })
+            </div>
+
+            <div class="row  form-group">
+                <label for="prize">Prize </label>
+                <span style="color:red">@Html.ValidationMessageFor(x => x.t_prize)</span>
+                @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                @Html.TextBoxFor(x => x.t_prize, new { @class = "form-control", @placeholder = "Prize", @required = "required" })
+            </div>
+
+            <div class="row  form-group">
+                <label for="contact">Contact </label>
+                <span style="color:red">@Html.ValidationMessageFor(x => x.t_contact)</span>
+                @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                @Html.TextBoxFor(x => x.t_contact, new { @class = "form-control", @placeholder = "Phone Number", @required = "required" })
+            </div>
+
+            <div class="row form-group">
+                <label for="gender">Sport</label>
+                <span style="color:red">@Html.ValidationMessageFor(x => x.t_cat)</span>
+                @*<asp:TextBox TextBox id="adminname" runat="server" class="form-control" placeholder="username" required="required"></asp:TextBox>*@
+                @Html.DropDownListFor(x => x.t_cat, ViewBag.categorylist as SelectList, "--Select--", new { @class = "form-control" })
+            </div>
+
+            <div class="row form-group">
+                @*<asp:button  class="form-control btn-success" id="adminname" runar="server" OnClick="button1_click" placeholder="username" required="required"></asp:button>*@
+                <input type="submit" value="Post" class="btn btn-block btn-primary" />
+            </div>
+            <div>
+                <p style="color:red">@ViewBag.error</p>
+            </div>
+        </div>
+    </div>
+
+
+}
+

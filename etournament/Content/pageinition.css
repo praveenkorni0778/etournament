@@ -1,0 +1,29 @@
+﻿.ul.pageinition{
+    display:inline-block;
+    padding:0;
+    margin:0;
+}
+
+ul.pageinition li{
+    display:inline;
+  
+}
+
+
+    ul .pageinition li a{
+    color: black;
+    float:left;
+    padding:8px 16px;
+    text-decoration:none;
+    transition:background-color .3s;
+
+}
+
+ul.pageinition li a.active{
+    background-color:#4CAF50;
+    color:white;
+}
+
+ul.pageinition li a:hover:not(.active){
+    background-color:#ddd;
+}

@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alegreya+SC:wght@500&family=Bubblegum+Sans&family=Pattaya&family=Roboto:wght@300&family=Syncopate&display=swap" rel="stylesheet">
+    <style>
+        .nav{
+            /*box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 11px -6px;
+            background-color: #17252A;*/
+            /*color: #DEF2F1;*/
+        }
+
+        .text {
+            color: #FEFFFF;
+        }
+
+        .ptext {
+            font-family: Roboto;
+        }
+
+        .heading {
+            font-family: Abril Fatface;
+        }
+
+        .pghead {
+            font-family: Alegreya SC;
+        }
+
+
+        .sidebar {
+            /*box-shadow: rgba(0, 0, 0, 0.12) 8px 8px 8px -4px;*/
+            /*background-color: #DEF2F1;*/
+            position: fixed;
+            z-index: 2;
+        }
+
+        .sidebarbtn {
+            /*background-color: #2B7A78;*/
+            /*color: #FEFFFF;*/
+        }
+        /*.sidebar1 {
+            box-shadow: rgba(0, 0, 0, 0.12) 1px 3px 3px 3px;
+            background-color: #2B7A78;
+        }*/
+        .body {
+            background-color: #FEFFFF;
+        }
+        /*beige, navy blue, yellow, powder blue, ghostwhite,,,,#17252A, , #3AAFA9, #DEF2F1, #FEFFFF*/
+        .icon-bar {
+            background-color: white;
+        }
+
+        .footer {
+            position:absolute;
+            width:100%;
+            overflow:hidden;
+            background-color:lightgray;
+            
+        }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | ESports Mela</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="">
+    <div class="navbar  navbar-inverse navbar-fixed-top" style="">
+        <div class="container ">
+            <div class="navbar-header">
+                
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("ESports Mela", "Index", "Home", new { area = "" }, new { @class = "navbar-brand text" })
+                @if (Session["ad_id"] != null)
+                {
+                    <span class="badge navbar-btn">Admin</span>
+                }
+            </div>
+            <div class="navbar-collapse collapse " style="">
+                <ul class="nav navbar-nav  navbar-right">
+                    <li>@Html.ActionLink("Home", "Index", "User",new { area = ""}, new { @class = " text" })</li>
+                    @if (Session["u_id"] != null || Session["ad_id"] != null)
+                    {
+                        if (Session["ad_id"] != null)
+                        {
+                            <li>@Html.ActionLink("View Category", "ViewCategory", "Admin", new { @class = " text" })</li>
+                            <li>@Html.ActionLink("Create", "Create", "Admin", new { @class = " text" })</li>
+
+                        }
+                        
+                        <li>@Html.ActionLink("Logout", "Logout", "User", new { area = "" }, new { @class = " text" })</li>
+                        
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login / SignUp", "UserLogin", "User", new { area = ""},new { @class = " text" })</li>
+                        <li>@Html.ActionLink("Admin", "Login", "Admin", new { area = ""}, new { @class = "text" })</li>
+
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid ">
+        <div class="row container-fluid body" style="padding-top:2% ; padding-bottom:5%">
+            @if (Session["u_id"] != null || Session["ad_id"] != null)
+            {
+                <div class="col-md-3 container-fluid navbar-collapse collapse fixed">
+
+                    <div id="mynav" class=" sidebar " style="width:15%;font-family:Bubblegum Sans">
+                        <div class="container-fluid ">
+                            <ul class="list-group nav">
+                                <li style="text-decoration:none; text-align:right" class="">
+                                    @Html.ActionLink("Applied >", "CreatePost", "User", new { @class = "text-center  btn-default sidebarbtn" })
+
+                                </li>
+                                <hr />
+                                <li style="text-decoration:none">
+                                    @Html.ActionLink("My Tournament", "CreatePost", "User", new { @class = "text-center  btn-default sidebarbtn" })
+
+                                </li>
+                                <hr />
+                                <li style="text-decoration:none; text-align:right" class="">
+
+                                    @Html.ActionLink("Browse All", "Viewall", "User", new { @class = "text-center navbar-btn btn-default sidebarbtn" })
+
+                                </li>
+                                <hr />
+                                <li style="text-decoration:none; text-align:right" class="">
+
+                                    @Html.ActionLink("Post Tournament", "CreatePost", "User", new { @class = "text-center navbar-btn btn-default sidebarbtn" })
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            @if (Session["u_id"] != null || Session["ad_id"] != null)
+            {
+                <div class="col-md-9 sidebar1 " style="margin-left:17%">
+                    @RenderBody()
+                </div>
+            }
+            else
+            {
+                <div class="container-fluid sidebar1">
+                    @RenderBody()
+                </div>
+            }
+
+        </div>
+
+
+
+    </div>
+    <footer class="footer" style="">
+        
+        <p class="text-center">&copy; @DateTime.Now.Year - Praveen Korni</p>
+    </footer>
+</body>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+
+</html>

@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbetournamentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_admin">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ad_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_category">
+          <Key>
+            <PropertyRef Name="c_id" />
+          </Key>
+          <Property Name="c_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="c_img" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="c_ref" Type="int" />
+          <Property Name="c_status" Type="int" Nullable="false" />
+          <Property Name="c_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_tournament">
+          <Key>
+            <PropertyRef Name="t_id" />
+          </Key>
+          <Property Name="t_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="t_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="t_add" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="t_website" Type="varchar" MaxLength="50" />
+          <Property Name="t_dts" Type="date" Nullable="false" />
+          <Property Name="t_dte" Type="date" Nullable="false" />
+          <Property Name="t_image" Type="nvarchar(max)" />
+          <Property Name="t_fk" Type="int" />
+          <Property Name="t_cat" Type="int" />
+          <Property Name="t_contact" Type="nvarchar" MaxLength="50" />
+          <Property Name="t_desc" Type="nvarchar(max)" />
+          <Property Name="t_location" Type="nvarchar" MaxLength="200" />
+          <Property Name="t_entryfee" Type="nvarchar" MaxLength="50" />
+          <Property Name="t_prize" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_img" Type="nvarchar(max)" />
+          <Property Name="u_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="u_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_age" Type="int" Nullable="false" />
+          <Property Name="u_dob" Type="date" Nullable="false" />
+          <Property Name="u_contact" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="u_gender" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="u_desc" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK__tbl_categ__c_ref__36B12243">
+          <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
+          <End Role="tbl_category" Type="Self.tbl_category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_admin">
+              <PropertyRef Name="ad_id" />
+            </Principal>
+            <Dependent Role="tbl_category">
+              <PropertyRef Name="c_ref" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_tourn__t_cat__48CFD27E">
+          <End Role="tbl_category" Type="Self.tbl_category" Multiplicity="0..1" />
+          <End Role="tbl_tournament" Type="Self.tbl_tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_category">
+              <PropertyRef Name="c_id" />
+            </Principal>
+            <Dependent Role="tbl_tournament">
+              <PropertyRef Name="t_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_tourna__t_fk__3B75D760">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+          <End Role="tbl_tournament" Type="Self.tbl_tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="tbl_tournament">
+              <PropertyRef Name="t_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbetournamentModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_admin" EntityType="Self.tbl_admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_category" EntityType="Self.tbl_category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_tournament" EntityType="Self.tbl_tournament" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tbl_categ__c_ref__36B12243" Association="Self.FK__tbl_categ__c_ref__36B12243">
+            <End Role="tbl_admin" EntitySet="tbl_admin" />
+            <End Role="tbl_category" EntitySet="tbl_category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_tourn__t_cat__48CFD27E" Association="Self.FK__tbl_tourn__t_cat__48CFD27E">
+            <End Role="tbl_category" EntitySet="tbl_category" />
+            <End Role="tbl_tournament" EntitySet="tbl_tournament" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_tourna__t_fk__3B75D760" Association="Self.FK__tbl_tourna__t_fk__3B75D760">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_tournament" EntitySet="tbl_tournament" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbetournamentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_admin">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad_username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ad_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_category" Relationship="Self.FK__tbl_categ__c_ref__36B12243" FromRole="tbl_admin" ToRole="tbl_category" />
+        </EntityType>
+        <EntityType Name="tbl_category">
+          <Key>
+            <PropertyRef Name="c_id" />
+          </Key>
+          <Property Name="c_id" Type="Int32" Nullable="false" />
+          <Property Name="c_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_ref" Type="Int32" />
+          <NavigationProperty Name="tbl_admin" Relationship="Self.FK__tbl_categ__c_ref__36B12243" FromRole="tbl_category" ToRole="tbl_admin" />
+          <NavigationProperty Name="tbl_tournament" Relationship="Self.FK__tbl_tourn__t_cat__3A81B327" FromRole="tbl_category" ToRole="tbl_tournament" />
+          <Property Name="c_status" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_tournament">
+          <Key>
+            <PropertyRef Name="t_id" />
+          </Key>
+          <Property Name="t_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="t_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="t_add" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="t_website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="t_dts" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="t_dte" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="t_contact" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="t_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="t_cat" Type="Int32" />
+          <Property Name="t_fk" Type="Int32" />
+          <NavigationProperty Name="tbl_category" Relationship="Self.FK__tbl_tourn__t_cat__3A81B327" FromRole="tbl_tournament" ToRole="tbl_category" />
+          <NavigationProperty Name="tbl_user" Relationship="Self.FK__tbl_tourna__t_fk__3B75D760" FromRole="tbl_tournament" ToRole="tbl_user" />
+          <Property Name="t_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="t_location" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="t_entryfee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="t_prize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="u_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="u_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_age" Type="Int32" Nullable="false" />
+          <Property Name="u_dob" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="u_contact" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbl_tournament" Relationship="Self.FK__tbl_tourna__t_fk__3B75D760" FromRole="tbl_user" ToRole="tbl_tournament" />
+          <Property Name="u_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__tbl_categ__c_ref__36B12243">
+          <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
+          <End Role="tbl_category" Type="Self.tbl_category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_admin">
+              <PropertyRef Name="ad_id" />
+            </Principal>
+            <Dependent Role="tbl_category">
+              <PropertyRef Name="c_ref" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_tourn__t_cat__3A81B327">
+          <End Role="tbl_category" Type="Self.tbl_category" Multiplicity="0..1" />
+          <End Role="tbl_tournament" Type="Self.tbl_tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_category">
+              <PropertyRef Name="c_id" />
+            </Principal>
+            <Dependent Role="tbl_tournament">
+              <PropertyRef Name="t_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_tourna__t_fk__3B75D760">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+          <End Role="tbl_tournament" Type="Self.tbl_tournament" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="tbl_tournament">
+              <PropertyRef Name="t_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbetournamentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_admin" EntityType="Self.tbl_admin" />
+          <EntitySet Name="tbl_category" EntityType="Self.tbl_category" />
+          <EntitySet Name="tbl_tournament" EntityType="Self.tbl_tournament" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" />
+          <AssociationSet Name="FK__tbl_categ__c_ref__36B12243" Association="Self.FK__tbl_categ__c_ref__36B12243">
+            <End Role="tbl_admin" EntitySet="tbl_admin" />
+            <End Role="tbl_category" EntitySet="tbl_category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_tourn__t_cat__3A81B327" Association="Self.FK__tbl_tourn__t_cat__3A81B327">
+            <End Role="tbl_category" EntitySet="tbl_category" />
+            <End Role="tbl_tournament" EntitySet="tbl_tournament" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_tourna__t_fk__3B75D760" Association="Self.FK__tbl_tourna__t_fk__3B75D760">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_tournament" EntitySet="tbl_tournament" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="dbetournamentModel.sysdiagram" />
+        </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbetournamentModelStoreContainer" CdmEntityContainer="dbetournamentEntities">
+          <EntitySetMapping Name="tbl_admin">
+            <EntityTypeMapping TypeName="dbetournamentModel.tbl_admin">
+              <MappingFragment StoreEntitySet="tbl_admin">
+                <ScalarProperty Name="ad_id" ColumnName="ad_id" />
+                <ScalarProperty Name="ad_username" ColumnName="ad_username" />
+                <ScalarProperty Name="ad_password" ColumnName="ad_password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_category">
+            <EntityTypeMapping TypeName="dbetournamentModel.tbl_category">
+              <MappingFragment StoreEntitySet="tbl_category">
+                <ScalarProperty Name="c_status" ColumnName="c_status" />
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+                <ScalarProperty Name="c_name" ColumnName="c_name" />
+                <ScalarProperty Name="c_img" ColumnName="c_img" />
+                <ScalarProperty Name="c_ref" ColumnName="c_ref" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_tournament">
+            <EntityTypeMapping TypeName="dbetournamentModel.tbl_tournament">
+              <MappingFragment StoreEntitySet="tbl_tournament">
+                <ScalarProperty Name="t_prize" ColumnName="t_prize" />
+                <ScalarProperty Name="t_entryfee" ColumnName="t_entryfee" />
+                <ScalarProperty Name="t_location" ColumnName="t_location" />
+                <ScalarProperty Name="t_desc" ColumnName="t_desc" />
+                <ScalarProperty Name="t_contact" ColumnName="t_contact" />
+                <ScalarProperty Name="t_id" ColumnName="t_id" />
+                <ScalarProperty Name="t_name" ColumnName="t_name" />
+                <ScalarProperty Name="t_add" ColumnName="t_add" />
+                <ScalarProperty Name="t_website" ColumnName="t_website" />
+                <ScalarProperty Name="t_dts" ColumnName="t_dts" />
+                <ScalarProperty Name="t_dte" ColumnName="t_dte" />
+                <ScalarProperty Name="t_image" ColumnName="t_image" />
+                <ScalarProperty Name="t_cat" ColumnName="t_cat" />
+                <ScalarProperty Name="t_fk" ColumnName="t_fk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_user">
+            <EntityTypeMapping TypeName="dbetournamentModel.tbl_user">
+              <MappingFragment StoreEntitySet="tbl_user">
+                <ScalarProperty Name="u_desc" ColumnName="u_desc" />
+                <ScalarProperty Name="u_img" ColumnName="u_img" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="u_name" ColumnName="u_name" />
+                <ScalarProperty Name="u_email" ColumnName="u_email" />
+                <ScalarProperty Name="u_password" ColumnName="u_password" />
+                <ScalarProperty Name="u_age" ColumnName="u_age" />
+                <ScalarProperty Name="u_dob" ColumnName="u_dob" />
+                <ScalarProperty Name="u_contact" ColumnName="u_contact" />
+                <ScalarProperty Name="u_gender" ColumnName="u_gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="dbetournamentModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,94 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .navbar {
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 11px -6px;
+            background-color: ghostwhite;
+        }
+
+        .sidebar {
+            box-shadow: rgba(0, 0, 0, 0.12) 8px 8px 8px -4px;
+            background-color: ghostwhite;
+            position: fixed;
+            z-index: 2;
+        }
+
+        .sidebar1 {
+            box-shadow: rgba(0, 0, 0, 0.12) 1px 3px 3px 3px;
+            background-color: ghostwhite;
+        }
+
+        .icon-bar {
+            background-color: black;
+        }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | ESports Mela</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="">
+    <div class="navbar  navbar-fixed-top" style="">
+        <div class="container ">
+            <div class="navbar-header">
+                <button type="button" class="left navbar-toggle" data-toggle="collapse" data-target="#mynav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("ESports Mela", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @if (Session["ad_id"] != null)
+                {
+                    <span class="badge navbar-btn">Admin</span>
+                }
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav  navbar-right">
+                    <li>@Html.ActionLink("Home", "Index", "User")</li>
+                    @if (Session["u_id"] != null || Session["ad_id"] != null)
+                    {
+                        if (Session["ad_id"] != null)
+                        {
+                            <li>@Html.ActionLink("View Category", "ViewCategory", "Admin")</li>
+                            <li>@Html.ActionLink("Create", "Create", "Admin")</li>
+
+                        }
+                        <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login/SignUp", "UserLogin", "User")</li>
+                        
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        @RenderBody()
+        <hr />
+        <footer class="">
+            <p>&copy; @DateTime.Now.Year - Praveen Korni</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+</html>

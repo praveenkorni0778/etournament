@@ -1,0 +1,24 @@
+﻿@model etournament.Models.tbl_tournament
+
+<tr class="row ">
+
+    <td class="col-lg-6 h3">
+        <b>@Model.t_name</b>
+        <div class="h4">
+            <small>Id: @Model.t_id</small>
+        </div>
+    </td>
+    <td class="col-lg-4 h4">
+        <div style="margin-top:2%">
+            <small>@Model.t_dts.ToLongDateString() - @Model.t_dte.ToLongDateString()</small>
+        </div>
+        <div class="">
+            <small>@Model.t_location</small>
+        </div>
+    </td>
+    <td class="col-lg-1 h4">
+        <div style="margin-top:2%">
+            @Html.ActionLink("view", "Viewcontest", new { id = Model.t_id })
+        </div>
+    </td>
+</tr>

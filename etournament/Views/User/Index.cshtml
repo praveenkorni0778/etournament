@@ -1,0 +1,50 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<etournament.Models.tbl_category>
+
+@{
+    ViewBag.Title = "User View";
+}
+<head>
+    <style>
+        .img:hover{
+            transform: scale(1.15);
+            box-shadow:5px , 5px, 5px, 5px;
+        }
+        .thumbnail {
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 8px -6px;
+        }
+        </style>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+<div class="container" style="width:100%">
+    <h1 class="text-center pghead ">Choose Sport</h1>
+    @*<hr style="background-color:black; height:1px">*@
+    </div>
+    <div class="container" style="height: 70% ;width:100%">
+
+
+        <div class=" row" style=" margin-bottom:40px">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-3 container img" style="height: 5%; margin-top:60px;">
+                        <a href="@Url.Action("Contests", "User", new { id = @item.c_id})" , id="@item.c_id" class="img ">
+                            <img src=@Url.Content(item.c_img) style=" height:100%; width:100%;margin-bottom:20px;text-align:center;filter:brightness(30%);" class="  img-responsive" />
+                            <div class="centered " style="font-family:Pattaya; position:absolute; top:50%; left:50%; transform: translate(-50%, -50%); font-size:25px;color:white">@item.c_name</div>
+                        </a>
+                        @*@Html.ActionLink(" ", "Contests","User", null ,new {@style = "background: url('" + @Url.Content(item.c_img)+ "') height:100%; width:100%;margin-bottom:20px;"})*@
+                        @*<h4 style="color:black; font-family:Arial; text-align:center">@Html.ActionLink(@item.c_name, "Contests", new { id = @item.c_id, }, null)</h4>*@
+                        
+
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+<div id="container" style="margin-left:45%">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>

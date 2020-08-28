@@ -23,6 +23,16 @@
           <Property Name="ad_username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ad_password" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dbetournament.dbo.tbl_applied' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_applied">
+          <Key>
+            <PropertyRef Name="applicant_id" />
+            <PropertyRef Name="tournament_id" />
+          </Key>
+          <Property Name="applicant_id" Type="int" Nullable="false" />
+          <Property Name="tournament_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbl_category">
           <Key>
             <PropertyRef Name="c_id" />
@@ -67,6 +77,30 @@
           <Property Name="u_gender" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="u_desc" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="FK__tbl_appli__appli__6383C8BA">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+          <End Role="tbl_applied" Type="Self.tbl_applied" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="tbl_applied">
+              <PropertyRef Name="applicant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_appli__tourn__6477ECF3">
+          <End Role="tbl_tournament" Type="Self.tbl_tournament" Multiplicity="1" />
+          <End Role="tbl_applied" Type="Self.tbl_applied" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_tournament">
+              <PropertyRef Name="t_id" />
+            </Principal>
+            <Dependent Role="tbl_applied">
+              <PropertyRef Name="tournament_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__tbl_categ__c_ref__36B12243">
           <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
           <End Role="tbl_category" Type="Self.tbl_category" Multiplicity="*" />
@@ -109,6 +143,20 @@
           <EntitySet Name="tbl_category" EntityType="Self.tbl_category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_tournament" EntityType="Self.tbl_tournament" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_applied" EntityType="Self.tbl_applied" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_applied].[applicant_id] AS [applicant_id], 
+    [tbl_applied].[tournament_id] AS [tournament_id]
+    FROM [dbo].[tbl_applied] AS [tbl_applied]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__tbl_appli__appli__6383C8BA" Association="Self.FK__tbl_appli__appli__6383C8BA">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_applied" EntitySet="tbl_applied" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_appli__tourn__6477ECF3" Association="Self.FK__tbl_appli__tourn__6477ECF3">
+            <End Role="tbl_tournament" EntitySet="tbl_tournament" />
+            <End Role="tbl_applied" EntitySet="tbl_applied" />
+          </AssociationSet>
           <AssociationSet Name="FK__tbl_categ__c_ref__36B12243" Association="Self.FK__tbl_categ__c_ref__36B12243">
             <End Role="tbl_admin" EntitySet="tbl_admin" />
             <End Role="tbl_category" EntitySet="tbl_category" />
@@ -167,6 +215,7 @@
           <Property Name="t_location" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="t_entryfee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="t_prize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_user1" Relationship="dbetournamentModel.tbl_applied" FromRole="tbl_tournament" ToRole="tbl_user" />
         </EntityType>
         <EntityType Name="tbl_user">
           <Key>
@@ -183,6 +232,7 @@
           <Property Name="u_gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tbl_tournament" Relationship="Self.FK__tbl_tourna__t_fk__3B75D760" FromRole="tbl_user" ToRole="tbl_tournament" />
           <Property Name="u_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_tournament1" Relationship="dbetournamentModel.tbl_applied" FromRole="tbl_user" ToRole="tbl_tournament" />
         </EntityType>
         <Association Name="FK__tbl_categ__c_ref__36B12243">
           <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
@@ -238,6 +288,10 @@
             <End Role="tbl_tournament" EntitySet="tbl_tournament" />
           </AssociationSet>
           <EntitySet Name="sysdiagrams" EntityType="dbetournamentModel.sysdiagram" />
+          <AssociationSet Name="tbl_applied" Association="dbetournamentModel.tbl_applied">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_tournament" EntitySet="tbl_tournament" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="sysdiagram">
           <Key>
@@ -249,6 +303,10 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <Association Name="tbl_applied">
+          <End Type="dbetournamentModel.tbl_user" Role="tbl_user" Multiplicity="*" />
+          <End Type="dbetournamentModel.tbl_tournament" Role="tbl_tournament" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -322,6 +380,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="tbl_applied" TypeName="dbetournamentModel.tbl_applied" StoreEntitySet="tbl_applied">
+            <EndProperty Name="tbl_tournament">
+              <ScalarProperty Name="t_id" ColumnName="tournament_id" />
+            </EndProperty>
+            <EndProperty Name="tbl_user">
+              <ScalarProperty Name="u_id" ColumnName="applicant_id" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

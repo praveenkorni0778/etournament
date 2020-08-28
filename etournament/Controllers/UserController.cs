@@ -144,14 +144,48 @@ namespace etournament.Controllers
             return View(stu);
         }
 
-        public ActionResult Contests(int ? id , int ? page)
+        /// <summary>
+        /// Displays the contests(tournaments that are in db).
+        /// for id = 0 all the tournaments will be displayed. 
+        /// for id = 1 all the tournaments, the user has organized will be displayed.
+        /// as these two id are not the id of any category in database.
+        /// 
+        /// this is intended to lower maintainance as we will not use more view pages for it..
+        /// </summary>
+        /// <param name="id"> takes id of the category. </param>
+        /// <param name="page"> page number of pageinition. </param>
+        /// <returns> Returns Contests View.  </returns>
+        public ActionResult Contests(int ? id , int ? page )
         {
             int pagesize = 12, pageindex = 1;
             pageindex = page.HasValue ? Convert.ToInt32(page) : 1;
-            var list = db.tbl_tournament.Where(x => x.t_cat == id).OrderByDescending(x => x.t_dts).ToList();
-            IPagedList<tbl_tournament> stu = list.ToPagedList(pageindex, pagesize);
-            return View(stu);
+            IPagedList<tbl_tournament> stu;            
+            var list = new List<etournament.Models.tbl_tournament>();
+            try
+            {
+                if (id == 1)
+                {
+                    int user = Convert.ToInt32(Session["u_id"]); 
+                    list = db.tbl_tournament.Where(x => x.t_fk == user).OrderByDescending(x => x.t_dts).ToList();                                  
+                }
+                if (id == 0)
+                {  
+                    list = db.tbl_tournament.OrderByDescending(x => x.t_dts).ToList();                                     
+                }
+                if(id != 1 && id != 0)
+                { 
+                    list = db.tbl_tournament.Where(x => x.t_cat == id).OrderByDescending(x => x.t_dts).ToList();                                        
+                }
+                stu = list.ToPagedList(pageindex, pagesize);
+                return View(stu);
+                
+            }
+            catch(Exception ex)
+            {
+               return View();
+            }
             
+
         }
 
         public ActionResult DeleteT(int? id)
@@ -159,7 +193,7 @@ namespace etournament.Controllers
             tbl_tournament t = db.tbl_tournament.Where(x => x.t_id == id).SingleOrDefault();
             db.tbl_tournament.Remove(t);
             db.SaveChanges();
-            return View("Home");
+            return View("Index");
         }
 
         public ActionResult Viewcontest(int? id )
@@ -188,6 +222,7 @@ namespace etournament.Controllers
             ad.u_desc = user.u_desc;
             ad.u_email = user.u_email;
             ad.t_fk = user.u_id;
+            //var list = ad.ToList();
             return View(ad);
         }
 

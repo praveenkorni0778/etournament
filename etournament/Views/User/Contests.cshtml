@@ -14,7 +14,12 @@
             }
 
             .thumbnail {
-                box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 8px -6px;
+                box-shadow: rgba(0, 0, 0, 0.12) 0px -0px 9px 2px;
+                margin:2%;
+                line-height:20%;
+            }
+            .thumbnail:hover{
+                box-shadow: rgba(0, 0, 0, 0.12) 0px -0px 9px 5px;
             }
         </style>
     </head>
@@ -23,27 +28,58 @@
     <div class="container-fluid">
         @{int x = 0;}
         <table class="table card " style="">
-            
-                @*<tr class="row panel-heading h3" style="background-color:dimgrey; color:whitesmoke ;">
 
-                    <th class="col-lg-1" style="">Id</th>
-                    <th class="col-lg-4">Tournament Name</th>
-                    <th class="col-lg-2">Date</th>
-                    <th class="col-lg-1"></th>
-            
-            </tr>*@
+            @*<tr class="row panel-heading h3" style="background-color:dimgrey; color:whitesmoke ;">
+
+                <th class="col-lg-1" style="">Id</th>
+                <th class="col-lg-4">Tournament Name</th>
+                <th class="col-lg-2">Date</th>
+                <th class="col-lg-1"></th>
+
+        </tr>*@
+
+
+
             @if (Model != null)
             {
                 foreach (var item in Model)
                 {
                     x++;
-                    
-                    
+                    <div class="col-lg-5 col-md-5 thumbnail  ">
+                        <a href="@Url.Action("Viewcontest","User", new { id = @item.t_id})">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img />
+                                </div>
+                                <div class="col-lg-8 col-md-6 h3">
+                                    <div class="">
+                                        <b>@item.t_name</b>
+                                    </div>
 
-                    <tr class="row ">
-                        
+                                    <div style="margin-top: 2%">
+                                        <small>@item.t_dts.ToLongDateString() - @item.t_dte.ToLongDateString()</small>
+                                        <div class="">
+                                            <small>@item.t_location</small>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="h4">
+                                        <small>Id: @item.t_id</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+
+                    @*<tr class="row ">
+
                         <td class="col-lg-6 h3">
-                            <b >@item.t_name</b> 
+                            <b>@item.t_name</b>
                             <div class="h4">
                                 <small>Id: @item.t_id</small>
                             </div>
@@ -56,12 +92,12 @@
                                 <small>@item.t_location</small>
                             </div>
                         </td>
-                        <td class="col-lg-1 h4" >
-                            <div style="margin-top:2%">
-                                @Html.ActionLink("view", "Viewcontest",new { id=item.t_id})
+                        <td class="col-lg-1 h4">
+                            <div style="margin-top: 2%">
+                                @Html.ActionLink("view", "Viewcontest", new { id = item.t_id })
                             </div>
                         </td>
-                    </tr>
+                    </tr>*@
                 }
             }
         </table>

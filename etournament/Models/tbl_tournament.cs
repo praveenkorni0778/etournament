@@ -14,6 +14,12 @@ namespace etournament.Models
     
     public partial class tbl_tournament
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_tournament()
+        {
+            this.tbl_user1 = new HashSet<tbl_user>();
+        }
+    
         public int t_id { get; set; }
         public string t_name { get; set; }
         public string t_add { get; set; }
@@ -31,5 +37,7 @@ namespace etournament.Models
     
         public virtual tbl_category tbl_category { get; set; }
         public virtual tbl_user tbl_user { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_user> tbl_user1 { get; set; }
     }
 }

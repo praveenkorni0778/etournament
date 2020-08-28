@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alegreya+SC:wght@500&family=Bubblegum+Sans&family=Pattaya&family=Roboto:wght@300&family=Syncopate&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@500&family=Alegreya+SC:wght@500&family=Alegreya+Sans+SC&family=Alegreya:ital,wght@1,500&family=PT+Serif&family=Roboto&family=Yantramanav&display=swap" rel="stylesheet">
     <style>
         .nav{
             /*box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 11px -6px;
@@ -10,7 +10,7 @@
         }
 
         .text {
-            color: #FEFFFF;
+            color: #DEF2F1;
         }
 
         .ptext {
@@ -18,7 +18,7 @@
         }
 
         .heading {
-            font-family: Abril Fatface;
+            font-family: Alegreya Sans SC;
         }
 
         .pghead {
@@ -105,33 +105,34 @@
         </div>
     </div>
     <div class="container-fluid ">
-        <div class="row container-fluid body" style="padding-top:2% ; padding-bottom:5%">
+        <div class="row container-fluid body" style="padding-top: 2%; padding-bottom: 5%">
             @if (Session["u_id"] != null || Session["ad_id"] != null)
             {
                 <div class="col-md-3 container-fluid navbar-collapse collapse fixed">
 
-                    <div id="mynav" class=" sidebar " style="width:15%;font-family:Bubblegum Sans">
+                    <div id="mynav" class=" sidebar " style="width:15%;font-family:Crimson Pro">
                         <div class="container-fluid ">
                             <ul class="list-group nav">
                                 <li style="text-decoration:none; text-align:right" class="">
-                                    @Html.ActionLink("Applied >", "CreatePost", "User", new { @class = "text-center  btn-default sidebarbtn" })
-
+                                    @Html.ActionLink("Applied ", "CreatePost", "User", new { @class = "text-center h5 btn-default sidebarbtn" })
+                                    <hr class="nav-divider"/>
                                 </li>
-                                <hr />
-                                <li style="text-decoration:none">
-                                    @Html.ActionLink("My Tournament", "CreatePost", "User", new { @class = "text-center  btn-default sidebarbtn" })
-
+                                
+                                <li style="text-decoration:none;" class="">
+                                    <a href="@Url.Action("Contests", "User", new { @id = 1})" class="text-center navbar-btn h5 btn-default sidebarbtn">My Tournament</a>
+                                    @*@Html.ActionLink("My Tournament", "CreatePost", "User", new { @class = "text-center h5 btn-default sidebarbtn" })*@
+                                    <hr class="nav-divider" />
                                 </li>
-                                <hr />
+                               
+                                <li style="text-decoration:none; text-align:right" class="">
+                                    <a href="@Url.Action("Contests", "User", new { @id = 0})" class="text-center navbar-btn h5 btn-default sidebarbtn">Browse All</a>
+                                    @*@Html.ActionLink("Browse All", "Contests", "User", new { @class = "text-center navbar-btn h5 btn-default sidebarbtn", @id = 0 })*@
+                                    <hr class="nav-divider" />
+                                </li>
+                               
                                 <li style="text-decoration:none; text-align:right" class="">
 
-                                    @Html.ActionLink("Browse All", "Viewall", "User", new { @class = "text-center navbar-btn btn-default sidebarbtn" })
-
-                                </li>
-                                <hr />
-                                <li style="text-decoration:none; text-align:right" class="">
-
-                                    @Html.ActionLink("Post Tournament", "CreatePost", "User", new { @class = "text-center navbar-btn btn-default sidebarbtn" })
+                                    @Html.ActionLink("Post Tournament", "CreatePost", "User", new { @class = "text-center h5 navbar-btn btn-default sidebarbtn" })
                                 </li>
 
                             </ul>
@@ -158,7 +159,7 @@
 
 
     </div>
-    <footer class="footer" style="">
+    <footer class="footer container-fluid" style="">
         
         <p class="text-center">&copy; @DateTime.Now.Year - Praveen Korni</p>
     </footer>

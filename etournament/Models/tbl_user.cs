@@ -18,6 +18,7 @@ namespace etournament.Models
         public tbl_user()
         {
             this.tbl_tournament = new HashSet<tbl_tournament>();
+            this.tbl_tournament1 = new HashSet<tbl_tournament>();
         }
     
         public string u_img { get; set; }
@@ -33,5 +34,7 @@ namespace etournament.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_tournament> tbl_tournament { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_tournament> tbl_tournament1 { get; set; }
     }
 }

@@ -13,8 +13,6 @@
         <AssociationConnector Association="dbetournamentModel.FK__tbl_tourn__t_cat__3A81B327" ManuallyRouted="false" />
         <AssociationConnector Association="dbetournamentModel.FK__tbl_tourna__t_fk__3B75D760" ManuallyRouted="false" />
         <EntityTypeShape EntityType="dbetournamentModel.sysdiagram" Width="1.5" PointX="7.25" PointY="5.625" />
-        <AssociationConnector Association="dbetournamentModel.tbl_applied" ManuallyRouted="false" >
-        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

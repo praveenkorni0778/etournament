@@ -24,15 +24,11 @@
           <Property Name="ad_password" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'dbetournament.dbo.tbl_applied' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6013: The table/view 'dbetournament.dbo.tbl_applied' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="tbl_applied">
-          <Key>
-            <PropertyRef Name="applicant_id" />
-            <PropertyRef Name="tournament_id" />
-          </Key>
-          <Property Name="applicant_id" Type="int" Nullable="false" />
-          <Property Name="tournament_id" Type="int" Nullable="false" />
-        </EntityType>
+          <Property Name="a_applicant" Type="int" />
+          <Property Name="a_tournament" Type="int" />
+        </EntityType>-->
         <EntityType Name="tbl_category">
           <Key>
             <PropertyRef Name="c_id" />
@@ -77,30 +73,12 @@ warning 6002: The table/view 'dbetournament.dbo.tbl_applied' does not have a pri
           <Property Name="u_gender" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="u_desc" Type="nvarchar(max)" />
         </EntityType>
-        <Association Name="FK__tbl_appli__appli__6383C8BA">
-          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
-          <End Role="tbl_applied" Type="Self.tbl_applied" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_user">
-              <PropertyRef Name="u_id" />
-            </Principal>
-            <Dependent Role="tbl_applied">
-              <PropertyRef Name="applicant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__tbl_appli__tourn__6477ECF3">
-          <End Role="tbl_tournament" Type="Self.tbl_tournament" Multiplicity="1" />
-          <End Role="tbl_applied" Type="Self.tbl_applied" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_tournament">
-              <PropertyRef Name="t_id" />
-            </Principal>
-            <Dependent Role="tbl_applied">
-              <PropertyRef Name="tournament_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <!--Errors Found During Generation:
+error 6004: The table 'dbetournament.dbo.tbl_applied' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__tbl_appli__a_app__71D1E811" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'dbetournament.dbo.tbl_applied' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__tbl_appli__a_tou__72C60C4A" />-->
         <Association Name="FK__tbl_categ__c_ref__36B12243">
           <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
           <End Role="tbl_category" Type="Self.tbl_category" Multiplicity="*" />
@@ -137,26 +115,43 @@ warning 6002: The table/view 'dbetournament.dbo.tbl_applied' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="dbetournamentModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_admin" EntityType="Self.tbl_admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_category" EntityType="Self.tbl_category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_tournament" EntityType="Self.tbl_tournament" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_applied" EntityType="Self.tbl_applied" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_applied].[applicant_id] AS [applicant_id], 
-    [tbl_applied].[tournament_id] AS [tournament_id]
-    FROM [dbo].[tbl_applied] AS [tbl_applied]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK__tbl_appli__appli__6383C8BA" Association="Self.FK__tbl_appli__appli__6383C8BA">
-            <End Role="tbl_user" EntitySet="tbl_user" />
-            <End Role="tbl_applied" EntitySet="tbl_applied" />
-          </AssociationSet>
-          <AssociationSet Name="FK__tbl_appli__tourn__6477ECF3" Association="Self.FK__tbl_appli__tourn__6477ECF3">
-            <End Role="tbl_tournament" EntitySet="tbl_tournament" />
-            <End Role="tbl_applied" EntitySet="tbl_applied" />
-          </AssociationSet>
           <AssociationSet Name="FK__tbl_categ__c_ref__36B12243" Association="Self.FK__tbl_categ__c_ref__36B12243">
             <End Role="tbl_admin" EntitySet="tbl_admin" />
             <End Role="tbl_category" EntitySet="tbl_category" />
@@ -215,7 +210,6 @@ warning 6002: The table/view 'dbetournament.dbo.tbl_applied' does not have a pri
           <Property Name="t_location" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="t_entryfee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="t_prize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tbl_user1" Relationship="dbetournamentModel.tbl_applied" FromRole="tbl_tournament" ToRole="tbl_user" />
         </EntityType>
         <EntityType Name="tbl_user">
           <Key>
@@ -232,7 +226,6 @@ warning 6002: The table/view 'dbetournament.dbo.tbl_applied' does not have a pri
           <Property Name="u_gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tbl_tournament" Relationship="Self.FK__tbl_tourna__t_fk__3B75D760" FromRole="tbl_user" ToRole="tbl_tournament" />
           <Property Name="u_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tbl_tournament1" Relationship="dbetournamentModel.tbl_applied" FromRole="tbl_user" ToRole="tbl_tournament" />
         </EntityType>
         <Association Name="FK__tbl_categ__c_ref__36B12243">
           <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
@@ -288,10 +281,36 @@ warning 6002: The table/view 'dbetournament.dbo.tbl_applied' does not have a pri
             <End Role="tbl_tournament" EntitySet="tbl_tournament" />
           </AssociationSet>
           <EntitySet Name="sysdiagrams" EntityType="dbetournamentModel.sysdiagram" />
-          <AssociationSet Name="tbl_applied" Association="dbetournamentModel.tbl_applied">
-            <End Role="tbl_user" EntitySet="tbl_user" />
-            <End Role="tbl_tournament" EntitySet="tbl_tournament" />
-          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(dbetournamentModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(dbetournamentModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
         <EntityType Name="sysdiagram">
           <Key>
@@ -303,10 +322,17 @@ warning 6002: The table/view 'dbetournament.dbo.tbl_applied' does not have a pri
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="tbl_applied">
-          <End Type="dbetournamentModel.tbl_user" Role="tbl_user" Multiplicity="*" />
-          <End Type="dbetournamentModel.tbl_tournament" Role="tbl_tournament" Multiplicity="*" />
-        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -380,14 +406,30 @@ warning 6002: The table/view 'dbetournament.dbo.tbl_applied' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="tbl_applied" TypeName="dbetournamentModel.tbl_applied" StoreEntitySet="tbl_applied">
-            <EndProperty Name="tbl_tournament">
-              <ScalarProperty Name="t_id" ColumnName="tournament_id" />
-            </EndProperty>
-            <EndProperty Name="tbl_user">
-              <ScalarProperty Name="u_id" ColumnName="applicant_id" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="dbetournamentModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="dbetournamentModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="dbetournamentModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="dbetournamentModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbetournamentModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="dbetournamentModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbetournamentModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="dbetournamentModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="dbetournamentModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
